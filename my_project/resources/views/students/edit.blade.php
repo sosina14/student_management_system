@@ -1,34 +1,58 @@
 @extends('layouts.app')
 
+@section('title', 'Edit Student | Student Management System')
+
 @section('content')
-
-<h3>Edit Student ✏️</h3>
-
-<form action="{{ route('students.update', $student->id) }}" method="POST">
-    @csrf
-    @method('PUT')
-
-    <div class="mb-3">
-        <input type="text" name="name" class="form-control" value="{{ old('name', $student->name) }}">
-        @error('name') <small class="text-danger">{{ $message }}</small> @enderror
+    <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
+        <div>
+            <h2 class="h3 mb-0 fw-bold">Edit Student</h2>
+            <div class="text-muted-2">Update the selected student record.</div>
+        </div>
+        <a href="{{ route('students.index') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-1"></i>Back to List
+        </a>
     </div>
 
-    <div class="mb-3">
-        <input type="email" name="email" class="form-control" value="{{ old('email', $student->email) }}">
-        @error('email') <small class="text-danger">{{ $message }}</small> @enderror
-    </div>
+    <div class="app-card p-3 p-lg-4">
+        <form action="{{ route('students.update', $student->id) }}" method="POST" class="row g-3">
+            @csrf
+            @method('PUT')
 
-    <div class="mb-3">
-        <input type="text" name="course" class="form-control" value="{{ old('course', $student->course) }}">
-        @error('course') <small class="text-danger">{{ $message }}</small> @enderror
-    </div>
+            <div class="col-12 col-md-6">
+                <label class="form-label fw-semibold">Name</label>
+                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                       value="{{ old('name', $student->name) }}" placeholder="Full name">
+                @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
 
-    <div class="mb-3">
-        <input type="date" name="enrollment_date" class="form-control" value="{{ old('enrollment_date', $student->enrollment_date) }}">
-        @error('enrollment_date') <small class="text-danger">{{ $message }}</small> @enderror
-    </div>
+            <div class="col-12 col-md-6">
+                <label class="form-label fw-semibold">Email</label>
+                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                       value="{{ old('email', $student->email) }}" placeholder="name@example.com">
+                @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
 
-    <button class="btn btn-primary">Update</button>
-</form>
+            <div class="col-12 col-md-6">
+                <label class="form-label fw-semibold">Course</label>
+                <input type="text" name="course" class="form-control @error('course') is-invalid @enderror"
+                       value="{{ old('course', $student->course) }}" placeholder="e.g., Computer Science">
+                @error('course') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <div class="col-12 col-md-6">
+                <label class="form-label fw-semibold">Enrollment Date</label>
+                <input type="date" name="enrollment_date" class="form-control @error('enrollment_date') is-invalid @enderror"
+                       value="{{ old('enrollment_date', $student->enrollment_date) }}">
+                @error('enrollment_date') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <div class="col-12 d-flex justify-content-end gap-2 pt-2">
+                <a href="{{ route('students.index') }}" class="btn btn-outline-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save2 me-1"></i>Update Student
+                </button>
+            </div>
+        </form>
+    </div>
 
 @endsection
